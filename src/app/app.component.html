@@ -1,14 +1,1 @@
-<h1>Сurrency converter  USD/EUR/PLN/UAH</h1>
-<div class="forms">
-    <div class="currency">
-        <label>From</label>
-        <input class="inputCSS" type="text" id="from" (input)="fromInput($event)">
-        <label>To</label>
-        <input class="inputCSS" type="text" id="to" (input)="toInput($event)">
-    </div>
-    <div class="currency">
-        <label>Money</label>
-        <input type="text" id="money" (input)="moneyInput($event)"><br><br>
-        <span class="res">{{this.money==0?null:this.money + " " + this.from + " = "}} {{result | number:'1.2-2'}} {{this.money==0?null:this.to}}</span>
-    </div>
-</div>
+<app-body></app-body>
