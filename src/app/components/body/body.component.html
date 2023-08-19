@@ -1,15 +1,14 @@
 <app-header></app-header>
 <app-footer></app-footer>
-<h2>USD/EUR/PLN/UAH</h2>
 <div class="forms">
     <div class="currency">
         <label>From</label>
-        <input class="inputCSS" type="text" id="from" (input)="fromInput($event)">
+        <input class="inputCSS" type="text" id="from" (input)="fromInput($event)" placeholder="" value="{{convertFrom}}">
         <label>To</label>
-        <input class="inputCSS" type="text" id="to" (input)="toInput($event)"><br>
-
-        <ng-container *ngIf=" this.from.length == 0 && this.to.length == 0; else onlyOne">
-            <!-- <p *ngFor="let key of this.data;">{{key.key.slice(0,3)}} => {{key.key.slice(3)}} = {{key.value}}</p> -->
+        <input class="inputCSS" type="text" id="to" (input)="toInput($event)" placeholder="" value="{{convertTo}}"><br>
+        <!-- <p *ngFor="let currency of currencys">{{currency.cc}} - {{currency.rate}}</p> -->
+                
+        <!-- <ng-container *ngIf=" this.from.length == 0 && this.to.length == 0; else onlyOne">
             <p>choose currency USD/EUR/PLN/UAH</p>
         </ng-container>
 
@@ -23,10 +22,9 @@
         <ng-template #twoCurrency>
             <ng-container *ngIf="this.from.length >0 or this.to.length >0">
                 <p>currencies selected</p> 
-                <!-- <p *ngFor="let currencyData of this.data;">{{currencyData.key.slice(0,3)}} => {{currencyData.key.slice(3)}} = {{currencyData.value}}</p> -->
                 <p>{{this.from}} => {{this.to}} = {{this.output[this.from + this.to]}}</p>
         </ng-container>
-        </ng-template>
+        </ng-template> -->
     </div>
     <div class="currency">
         <label>Money</label>

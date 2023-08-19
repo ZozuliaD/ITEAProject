@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CurrencyDataService } from 'src/app/services/currency-data.service';
 
 @Component({
   selector: 'app-body',
@@ -6,52 +7,43 @@ import { Component } from '@angular/core';
   styleUrls: ['./body.component.css']
 })
 export class BodyComponent {
+  
   from : string = "";
   to : string = "";
+  convertFrom: string | null = localStorage.getItem("convertFrom");
+  convertTo: string | null = localStorage.getItem("convertTo");
   money: number = 0;
-  //calc : number = 0;
   result : number = 0;
-  dataShow = [
-    { key: "USD" },
-    { key: "EUR" },
-    { key: "PLN" },
-    { key: "UAH" }];
-  data = [
-    { key: "USDUSD", value: "1"},
-    { key: "USDEUR", value: "1.1"},
-    { key: "USDPLN", value: "4.07"},
-    { key: "USDUAH", value: "36.74"},
-    { key: "EURUSD", value: "1.1"},
-    { key: "EUREUR", value: "1"},
-    { key: "EURPLN", value: "4.46"},
-    { key: "EURUAH", value: "40.25"}, 
-    { key: "PLNUSD", value: "0.25"},
-    { key: "PLNEUR", value: "0.22"},
-    { key: "PLNPLN", value: "1"},
-    { key: "PLNUAH", value: "9.03"}, 
-    { key: "UAHUSD", value: "0.027"},
-    { key: "UAHEUR", value: "0.025"},
-    { key: "UAHPLN", value: "0.11"},
-    { key: "UAHUAH", value: "1"}];
-    
-    output = Object.fromEntries(this.data.map(v => [v.key, v.value]));
+  
+currencys: any = [
+  { сс: "", rate: 0}
+];
 
-  fromInput(e : any): void{
-    this.from = e.target.value;
-    console.log(this.result);
+constructor (public api: CurrencyDataService){
+  this.api.takeData().subscribe(data=>this.currencys=data)
+}
+
+fromInput(e: any){
+  localStorage.setItem("convertFrom",e.target.value);
+  this.convertFrom = localStorage.getItem("convertFrom");
+   this.convertFrom = localStorage.getItem(e.target.value);
   }
 
-  toInput(e : any): void{
-    this.to = e.target.value;
-    console.log(this.result);
-  }
+toInput(e: any){
+  localStorage.setItem("convertTo",e.target.value);
+  this.convertTo = localStorage.getItem("convertTo");
+  this.convertTo = localStorage.getItem(e.target.value);
+}
 
   moneyInput(e : any): void{
-    // let output = Object.fromEntries(this.data.map(v => [v.key, v.value]));
     this.money = e.target.value;
-      console.log(this.from + this.to + "=" + this.output[this.from + this.to]);
-      this.result = Number(this.money) * Number(this.output[this.from + this.to]);
-      //this.result = this.money + " " + this.from + " = " + this.calc + " " + this.to;
+    if (this.convertFrom=="UAH" && this.convertTo!=null) {
+      this.result = Number(this.money)/this.currencys.find((dd: any) => dd.cc ===this.convertTo).rate;
+    }
+   if (this.convertTo=="UAH" && this.convertFrom!=null) {
+      this.result = Number(this.money)*this.currencys.find((dd: any) => dd.cc ===this.convertFrom).rate;
+    }
       console.log(this.result);
   }
+  
 }
