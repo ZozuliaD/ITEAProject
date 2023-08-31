@@ -1,34 +1,25 @@
 <app-header></app-header>
 <app-footer></app-footer>
+
 <div class="forms">
     <div class="currency">
         <label>From</label>
-        <input class="inputCSS" type="text" id="from" (input)="fromInput($event)" placeholder="" value="{{convertFrom}}">
+            <select name="selectFrom" id="selectFrom" [(ngModel)]='this.from' (change)="onSelectedFrom(this.from)">
+                <!-- [(ngModel)]='this.from' -->
+                <option *ngFor="let currency_ of currencys" value="{{currency_.cc}}"
+                [selected]="currency_.cc === this.from">{{currency_.cc}}-{{currency_.txt}}</option>
+            </select>
+        <br>
         <label>To</label>
-        <input class="inputCSS" type="text" id="to" (input)="toInput($event)" placeholder="" value="{{convertTo}}"><br>
+            <select name="selectTo" id="selectTo" [(ngModel)]='this.to' (change)="onSelectedFrom(this.to)">
+                <option *ngFor="let currency_ of currencys">{{currency_.cc}}-{{currency_.txt}}</option>
+            </select>
         <!-- <p *ngFor="let currency of currencys">{{currency.cc}} - {{currency.rate}}</p> -->
-                
-        <!-- <ng-container *ngIf=" this.from.length == 0 && this.to.length == 0; else onlyOne">
-            <p>choose currency USD/EUR/PLN/UAH</p>
-        </ng-container>
-
-        <ng-template #onlyOne>
-            <ng-container *ngIf="this.from.length == 0 || this.to.length == 0; else twoCurrency">
-                <p>only one currency selected from : </p>
-                <p *ngFor="let currencyData of this.dataShow;">{{currencyData.key}}</p>
-            </ng-container>
-        </ng-template>
-
-        <ng-template #twoCurrency>
-            <ng-container *ngIf="this.from.length >0 or this.to.length >0">
-                <p>currencies selected</p> 
-                <p>{{this.from}} => {{this.to}} = {{this.output[this.from + this.to]}}</p>
-        </ng-container>
-        </ng-template> -->
     </div>
+
     <div class="currency">
         <label>Money</label>
         <input type="text" id="money" (input)="moneyInput($event)"><br><br>
-        <span>{{result | currency: this.to:'symbol-narrow':'1.2-2' | currPipe}}</span>
+        <span>{{result_ | currency: this.to:'symbol-narrow':'1.2-2' | currPipe}}</span>
     </div>
 </div>
